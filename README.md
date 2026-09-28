@@ -152,7 +152,8 @@ graph LR
 ```bash
 cd backend
 npm install
-# Configure your .env with SUPABASE_URL, SUPABASE_KEY, TWILIO_SID, RAZORPAY_KEY, etc.
+# Configure .env with SUPABASE_URL, SUPABASE_ANON_KEY, GROQ_API_KEY, and other service credentials.
+# Optional: set GROQ_ANALYSIS_MODEL and GROQ_ASSISTANT_MODEL to override the GPT-OSS defaults.
 npm start
 ```
 The API server will be available at `http://localhost:3001`.
