@@ -4,11 +4,15 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
+// Groq-hosted GPT-OSS model IDs.
+const ANALYSIS_MODEL = "openai/gpt-oss-120b";
+const ASSISTANT_MODEL = "openai/gpt-oss-20b";
+
 const keyPrefix = process.env.GROQ_API_KEY ? process.env.GROQ_API_KEY.substring(0, 7) : "MISSING";
 console.log(`[GROQ] Service initialized with API Key: ${keyPrefix}...`);
 
 /**
- * Predict crop prices and trends using Groq (Llama 3).
+ * Predict crop prices and trends using Groq.
  * @param {string} crop - Name of the crop to predict.
  */
 async function predictCropPrice(crop, role = 'farmer') {
@@ -74,7 +78,7 @@ async function predictCropPrice(crop, role = 'farmer') {
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "llama-3.3-70b-versatile",
+      model: ANALYSIS_MODEL,
       temperature: 0.4,
       response_format: { type: "json_object" },
     });
@@ -88,7 +92,7 @@ async function predictCropPrice(crop, role = 'farmer') {
 }
 
 /**
- * Chat with Raitha Mithra AI Assistant using Groq (Llama 3).
+ * Chat with Raitha Mithra AI Assistant using Groq.
  * @param {string} message - User's query.
  * @param {string} lang - Language (en, hi, kn).
  */
@@ -146,7 +150,7 @@ async function chatAssistant(message, lang, context = null) {
           content: prompt,
         },
       ],
-      model: "llama-3.1-8b-instant",
+      model: ASSISTANT_MODEL,
       response_format: { type: "json_object" },
     });
 
@@ -186,7 +190,7 @@ async function fetchTrendingInsights() {
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "llama-3.3-70b-versatile",
+      model: ANALYSIS_MODEL,
       temperature: 0.7,
       response_format: { type: "json_object" },
     });
