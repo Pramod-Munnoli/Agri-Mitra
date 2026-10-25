@@ -1,6 +1,22 @@
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3002/api';
+const isCapacitor = typeof window !== 'undefined' && (
+  window.Capacitor !== undefined ||
+  window.location.protocol === 'capacitor:' ||
+  (window.location.hostname === 'localhost' && window.location.port === '')
+);
+
+// --- API CONFIGURATION ---
+// 1. For LOCAL testing (Emulator/Physical phone via Hotspot/Wi-Fi):
+const LOCAL_API_URL = 'http://192.168.137.1:3002/api';
+
+// 2. For PRODUCTION (Online backend deployed on Render/Railway/etc.):
+const PROD_API_URL = 'https://agri-mitra.onrender.com/api';
+
+// Choose active environment (Switch to PROD_API_URL when deploying online)
+const CURRENT_MOBILE_API = PROD_API_URL; // Change to PROD_API_URL for online/production
+
+const API_BASE = import.meta.env.VITE_API_URL || (isCapacitor ? CURRENT_MOBILE_API : 'http://localhost:3002/api');
 
 const apiClient = axios.create({
   baseURL: API_BASE,

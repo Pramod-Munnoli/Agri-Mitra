@@ -52,12 +52,30 @@ app.use(helmet({
 
 // 2. CORS - Must be BEFORE rate limiters to ensure headers are present on all responses
 app.use(cors({
-  origin: [
-    'https://agri-mitra-alpha.vercel.app',
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'http://127.0.0.1:5173'
-  ],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, curl, postman)
+    if (!origin) return callback(null, true);
+
+    const allowedOrigins = [
+      'https://agri-mitra-alpha.vercel.app',
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'http://127.0.0.1:5173',
+      'http://localhost',
+      'capacitor://localhost'
+    ];
+
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.startsWith('http://192.168.') ||
+      origin.startsWith('http://10.') ||
+      origin.startsWith('http://172.')
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(null, true); // Allow all in dev
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

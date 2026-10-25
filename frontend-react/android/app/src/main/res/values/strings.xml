@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Agri Mitra</string>
+    <string name="title_activity_main">Agri Mitra</string>
+    <string name="package_name">com.agrimitra.app</string>
+    <string name="custom_url_scheme">com.agrimitra.app</string>
+</resources>

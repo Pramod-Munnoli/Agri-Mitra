@@ -1,0 +1,13 @@
+{
+  "appId": "com.agrimitra.app",
+  "appName": "Agri Mitra",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http"
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}
